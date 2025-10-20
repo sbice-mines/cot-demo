@@ -2,7 +2,13 @@
 
 Interactive demonstration of Chain of Thought (CoT) improvements in AI responses.
 
-## 🚀 Quick Start
+## 🌐 Live Demo
+
+**Try it now:** https://cot-improvements-demo-nywxipjwn-jbicehome-4915s-projects.vercel.app
+
+No setup required - works immediately with live API calls!
+
+## 🚀 Local Development
 
 **Option 1: Run with Demo Data (No API Key Required)**
 ```bash
@@ -42,7 +48,7 @@ npm start
 - **Frontend**: React + Tailwind CSS
 - **Backend**: Node.js proxy server (for CORS)
 - **API**: Anthropic Claude 3.5 Sonnet
-- **Deployment**: Ready for GitHub Pages or any static hosting
+- **Deployment**: Live on Vercel with automatic deployments
 
 ## 📊 Demo Scenarios
 
@@ -50,4 +56,4 @@ npm start
 - Seasonal spending patterns
 - Department budget comparison
 
-The demo works perfectly without any API keys - just clone and run! 🎉
+The demo works perfectly without any API keys - just visit the live link or clone and run! 🎉
