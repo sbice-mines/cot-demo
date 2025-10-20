@@ -146,7 +146,6 @@ export default function ResponseDesignDemo() {
     hybrid: false,
   });
   const [showIntro, setShowIntro] = useState(true);
-  const [presentationMode, setPresentationMode] = useState(false);
   const [apiKeyStatus, setApiKeyStatus] = useState(null);
 
   const currentScenario = SCENARIOS[scenario];
@@ -179,20 +178,18 @@ export default function ResponseDesignDemo() {
 
   const generateMockResponses = (dataString, question) => {
     // Mock responses for demo when API key is not available
-    const rawResponse = `Analyzing your question: I need to examine the financial data to understand the expense increase from Q2 to Q3. Let me check the instruction set configurations and data access permissions first.
+    const rawResponse = `Analyzing your question: The user is asking about expense increases from Q2 to Q3. The instruction set date_macro is set to QUARTERLY_COMPARISON. The question is clear and self-contained, requesting a quarter-over-quarter analysis.
 
-Security and validation checks: I'm applying standard financial data access rules, checking user permissions for expense data, and validating that the date range is appropriate for analysis.
+Interpreting your question: This is a financial performance analysis query. The expense data provided is the most suitable dataset for this type of comparison. I'll need to calculate percentage changes and identify the primary drivers of the increase.
 
-Interpreting your question: I'll construct queries to compare Q2 vs Q3 expenses across all categories, looking for patterns and significant changes.
-
-Customizing your Expense Analysis Report: I'm preparing a comprehensive analysis using standard financial reporting parameters and business intelligence tools.
+Customizing your expense analysis: I'm preparing a quarterly comparison report analyzing the expense categories with percentage change calculations and trend analysis.
 
 **Analysis Results:**
 
 Your expenses increased by 10.2% from Q2 to Q3, rising from $28,100 to $30,750. The primary drivers were:
 
 1. **Marketing expenses** (+11.7%): Increased from $12,000 to $13,400, likely due to seasonal campaigns
-2. **Freight costs** (+23.8%): Jumped from $2,100 to $2,600, possibly due to fuel price increases
+2. **Freight costs** (+23.8%): Jumped from $2,100 to $2,600, possibly due to fuel price increases  
 3. **Travel expenses** (+8.1%): Rose from $8,000 to $8,650, potentially reflecting increased business activity
 
 Supplies remained relatively stable (+1.7%), suggesting good cost control in that area.
@@ -308,26 +305,24 @@ Your expenses increased 10.2% from Q2 ($28,100) to Q3 ($30,750). Top drivers: Ma
 
       setLoadingStep("Generating Raw CoT response...");
 
-      // RAW COT - Mimics the leaky, meta-heavy style with SECURITY CONCERNS
+      // RAW COT - Mimics realistic but problematic internal reasoning exposure
       const rawPrompt = `You are analyzing financial data. Here's the expense data:
 
 ${dataString}
 
 Question: ${question}
 
-Show your complete reasoning process in sections. Be very thorough and explicit about your internal process:
+Show your reasoning process in sections, being explicit about your internal analysis:
 
-1. "Analyzing your question" - Discuss what the user is asking. Mention any instruction set configurations (like date_macro=LAST_YEAR, instruction_set=THIS_YEAR_TO_DATE being overridden), access controls being checked, or data permissions being validated.
+1. "Analyzing your question" - Discuss what the user is asking. Mention any instruction set configurations or date macro changes that might apply.
 
-2. "Security and validation checks" - Note what data access rules you're applying, what filters are in place, any user permission levels being checked.
+2. "Interpreting your question" - Explain which dataset/approach is suitable for this type of query and any relevant entity resolution.
 
-3. "Interpreting your question" - Explain which dataset/approach is suitable, what queries you're constructing, any resolved entities (like vendor IDs, account IDs).
+3. "Customizing your analysis" - Describe how you're preparing the analysis and what parameters you're using.
 
-4. "Customizing your [Report Type]" - Describe how you're preparing the analysis, what system parameters you're using.
+4. Then provide the actual answer.
 
-5. Then provide the actual answer.
-
-Be extremely detailed about your internal reasoning process, system configurations, and decision logic.`;
+Be detailed about your internal reasoning process and system configurations.`;
 
       setLoadingStep("Generating Prompt-Shaped response...");
       
@@ -463,13 +458,11 @@ Respond ONLY with valid JSON.`;
   };
 
   const toggleThinking = (type) => {
-    if (presentationMode) return; // Don't toggle in presentation mode
     setExpandedThinking((prev) => ({ ...prev, [type]: !prev[type] }));
   };
 
-  // Auto-expand all thinking in presentation mode
   const isThinkingExpanded = (type) => {
-    return presentationMode || expandedThinking[type];
+    return expandedThinking[type];
   };
 
   const renderMetrics = (metrics) => (
@@ -806,24 +799,6 @@ Respond ONLY with valid JSON.`;
             )}
           </div>
 
-          {/* Presentation Controls */}
-          <div className="mb-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-semibold text-slate-700">Presentation Mode</h3>
-              <label className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={presentationMode}
-                  onChange={(e) => setPresentationMode(e.target.checked)}
-                  className="rounded"
-                />
-                <span className="text-xs text-slate-600">Auto-expand all sections</span>
-              </label>
-            </div>
-            <p className="text-xs text-slate-500">
-              Enable presentation mode to automatically expand all thinking sections
-            </p>
-          </div>
 
           <button
             onClick={runAnalysis}
@@ -893,7 +868,6 @@ Respond ONLY with valid JSON.`;
               <button
                 onClick={() => toggleThinking("raw")}
                 className="w-full px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors bg-red-100"
-                disabled={presentationMode}
               >
                 <span className="text-sm font-medium text-slate-700">
                   {isThinkingExpanded("raw") ? "Hide thinking" : "Show thinking"}{" "}
@@ -963,7 +937,6 @@ Respond ONLY with valid JSON.`;
               <button
                 onClick={() => toggleThinking("instructed")}
                 className="w-full px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-200"
-                disabled={presentationMode}
               >
                 <span className="text-sm font-medium text-slate-700">
                   {isThinkingExpanded("instructed") ? "Hide thinking" : "Show thinking"}{" "}
@@ -1028,7 +1001,6 @@ Respond ONLY with valid JSON.`;
               <button
                 onClick={() => toggleThinking("coded")}
                 className="w-full px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-200"
-                disabled={presentationMode}
               >
                 <span className="text-sm font-medium text-slate-700">
                   {isThinkingExpanded("coded") ? "Hide thinking" : "Show thinking"}{" "}
@@ -1095,7 +1067,6 @@ Respond ONLY with valid JSON.`;
               <button
                 onClick={() => toggleThinking("hybrid")}
                 className="w-full px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors border-b border-slate-200"
-                disabled={presentationMode}
               >
                 <span className="text-sm font-medium text-slate-700">
                   {isThinkingExpanded("hybrid") ? "Hide thinking" : "Show thinking"}{" "}

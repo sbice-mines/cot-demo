@@ -1,0 +1,37 @@
+EXAMPLE 1:
+
+Analyzing your question
+STEP 1 - Historical analysis: The previous turns established a context of financial analysis, specifically focusing on 'last year' for income and expenses. The current question explicitly asks about 'assets and liabilities at the end of the last year', maintaining the 'last year' time context.
+STEP 2 - Instruction sets extraction: The active instruction set THIS_YEAR_TO_DATE is overridden by the explicit mention of 'last year' in the current query. Therefore, the date_macro instruction set is updated to LAST_YEAR.
+STEP 3 - Updated question: The question is already clear and self-contained, explicitly stating 'last year'.
+No further modification to the question text is needed. The date_macro is updated to reflect the user's explicit time frame.
+Decomposing your question
+The user is asking for the total value of assets and liabilities at a specific point in time ('end of last year').
+The 'Balance Sheet' report is designed to provide a snapshot of a company's financial position, including assets and liabilities, at a given date. Therefore, it is the most appropriate dataset to answer both parts of the question. The resolved entities were not directly used as they refer to specific accounts or vendors, not the overall categories of assets and liabilities requested by the user. The instruction set to filter by
+'End of Last Year' has been applied to the customize hint for both decomposed questions.
+Customizing your Balance Sheet report
+This summary report analyzes Balance Sheet, as of 31-Dec-24.
+Analyzing your Balance Sheet as of 31-Dec-24 (Summary) report
+Customizing your Balance Sheet report
+This summary report analyzes Balance Sheet, as of last year.
+Analyzing your Balance Sheet as of last year (Summary) report
+
+EXAMPLE 2:
+
+Show thinking
+
+Analyzing your question
+
+The question is clear and self-contained. The instruction set date_macro is updated from THIS_YEAR TO_DATE to LAST_YEAR because the user explicitly requested "last year" in the query. The question text remains unchanged as the time period "last year" is already explicitly stated within the original query, making it self-contained and clear for downstream processing.
+
+Interpreting your question
+
+The user's question asks for 'gross profit by month for last year', which directly relates to a company's profitability. The 'Profit and Loss' report is the most suitable dataset for this type of query as it provides detailed profitability data, including gross profit. The report can be customized to show data by month for a specified period, such as 'Last Year'. The resolved entities (ITEM_NAME, PROJECT_NAME) are not relevant to this general financial performance question and have been ignored.
+
+Customizing your Profit and Loss report
+
+This summary report analyzes Profit and Loss, grouped by Month, for last year.
+
+Analyzing your Profit And Loss for last year grouped by Month (Summary) report
+
+I analyzed the gross profit by month for last year using the available financial data. First, I identified all entries related to 'Gross Profit'. Then, I extracted the gross profit amount for each month. To ensure the data was clearly presented for visualization, I formatted the month information (e.g., converting '2024-01' to 'Jan 2024') and confirmed that the profit values were correctly interpreted as numerical amounts. Based on this analysis, I found that the gross profit for January, February, and March 2024 was $0.00. Profit began to appear in April ($5.91) and May ($165.00), followed by June ($19.99). A significant increase was observed in July ($1,463.89) and August ($25,515.20). The highest gross profit months were September ($1,629,405.69) and November ($1,005,313.62), with October ($13,967.18) and December (5504,068.72) also showing substantial contributions. The total annual gross profit amounted to $3,078,925.19, indicating a strong growth trend in the latter half of the year.
