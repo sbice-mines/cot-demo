@@ -157,7 +157,7 @@ export default function ResponseDesignDemo() {
     if (apiKey && apiKey !== "your_api_key_here" && apiKey.startsWith("sk-ant-")) {
       setApiKeyStatus("ready");
     } else {
-      setApiKeyStatus("missing");
+      setApiKeyStatus("demo"); // Changed from "missing" to "demo"
     }
   }, []);
 
@@ -297,7 +297,7 @@ Your expenses increased 10.2% from Q2 ($28,100) to Q3 ($30,750). Top drivers: Ma
       
       if (!hasApiKey) {
         // Show mock responses for demo purposes
-        setLoadingStep("Generating mock responses (API key not configured)...");
+        setLoadingStep("Generating demo responses...");
         await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API delay
         
         const mockResults = generateMockResponses(dataString, question);
@@ -445,18 +445,18 @@ Respond ONLY with valid JSON.`;
 
       setResults({ raw, instructed, coded: codedData, metrics });
     } catch (err) {
-      console.warn("API calls failed, using mock responses:", err.message);
+      console.warn("API calls failed, using demo responses:", err.message);
       
       // Fall back to mock responses on any error
-      setLoadingStep("Generating mock responses (API unavailable)...");
+      setLoadingStep("Generating demo responses...");
       await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate processing delay
       
       const dataString = formatDataForPrompt(currentScenario.data);
       const mockResults = generateMockResponses(dataString, question);
       setResults(mockResults);
       
-      // Show a subtle notification that we're using mock data
-      setError("Note: Using mock responses for demo (API unavailable due to CORS restrictions)");
+      // Show a subtle notification that we're using demo data
+      setError("Note: Using demo responses (API unavailable)");
     } finally {
       setLoading(false);
     }
@@ -556,9 +556,15 @@ Respond ONLY with valid JSON.`;
             <h1 className="text-4xl font-bold text-slate-900">
               Chain of Thought: From Security Risk to Production Ready
             </h1>
-            <div className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              LIVE DEMO
+            <div className={`flex items-center gap-2 px-3 py-1 text-sm font-medium rounded-full ${
+              apiKeyStatus === "ready" 
+                ? "bg-green-100 text-green-800" 
+                : "bg-blue-100 text-blue-800"
+            }`}>
+              <div className={`w-2 h-2 rounded-full animate-pulse ${
+                apiKeyStatus === "ready" ? "bg-green-500" : "bg-blue-500"
+              }`}></div>
+              {apiKeyStatus === "ready" ? "LIVE API" : "DEMO MODE"}
             </div>
           </div>
           <p className="text-lg text-slate-600 mb-4">
