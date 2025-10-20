@@ -140,10 +140,10 @@ export default function ResponseDesignDemo() {
   const [error, setError] = useState(null);
   const [showPromptConfig, setShowPromptConfig] = useState(false);
   const [expandedThinking, setExpandedThinking] = useState({
-    raw: true,
-    instructed: true,
-    coded: true,
-    hybrid: true,
+    raw: false,
+    instructed: false,
+    coded: false,
+    hybrid: false,
   });
   const [showIntro, setShowIntro] = useState(true);
   const [presentationMode, setPresentationMode] = useState(false);
