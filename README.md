@@ -4,7 +4,7 @@ Interactive demonstration of Chain of Thought (CoT) improvements in AI responses
 
 ## 🌐 Live Demo
 
-**Try it now:** https://cot-improvements-demo-nywxipjwn-jbicehome-4915s-projects.vercel.app
+**Try it now:** https://cot-demo-qzziphrwp-jason-bices-projects.vercel.app
 
 No setup required - works immediately with live API calls!
 
