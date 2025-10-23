@@ -248,7 +248,12 @@ Your expenses increased 10.2% from Q2 ($28,100) to Q3 ($30,750). Top drivers: Ma
 
     try {
       // Use our proxy server to avoid CORS issues
-      const response = await fetch("http://localhost:3001/api/anthropic", {
+      // In production (Vercel), use /api/anthropic. Locally, use localhost:3001
+      const apiEndpoint = process.env.NODE_ENV === 'production' 
+        ? '/api/anthropic'
+        : 'http://localhost:3001/api/anthropic';
+      
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
