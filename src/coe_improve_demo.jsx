@@ -1464,7 +1464,7 @@ Respond ONLY with valid JSON.`;
           <div className="mt-8 bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-6">
             <h3 className="text-2xl font-bold text-slate-900 mb-4 flex items-center gap-2">
               <CheckCircle className="w-6 h-6 text-green-600" />
-              Key Takeaways for Your Presentation
+              Key Takeaways
             </h3>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
