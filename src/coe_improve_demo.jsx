@@ -1347,18 +1347,27 @@ Format: Show only the final refined answer (not the scratchpad or review).`;
         </div>
       </div>
 
-      {/* Unified Answer */}
+      {/* Answers comparison */}
       <div className="bg-white border-2 border-green-400 rounded-lg p-6 mt-6">
         <h4 className="text-sm font-semibold text-green-900 mb-3 flex items-center gap-2">
           <CheckCircle className="w-5 h-5" />
-          The Answer (Works with Either Approach)
+          The Answers - Similar Quality, Different Structure
         </h4>
-        <div className="bg-green-50 rounded p-4 text-sm text-slate-800 mb-4">
-          <p className="font-semibold mb-2">Why Your Expenses Increased from Q2 to Q3</p>
-          <p>
-            Total expenses increased $2,650 from $28,100 to $30,750 (9.4% growth). Key drivers: Marketing +$1,400 (11.7%), 
-            Freight +$500 (23.8%), Travel +$650 (8.1%). The increase appears consistent with business growth rather than isolated anomalies.
-          </p>
+        
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <div className="text-xs font-semibold text-indigo-700 mb-2">From Natural Language Approach:</div>
+            <div className="bg-indigo-50 border border-indigo-200 rounded p-3 text-sm text-slate-800">
+              <p>Your Q2 to Q3 expenses increased 9.4% (total: $28,100 → $30,750). The main drivers are Marketing (+$1,400, 11.7%), Freight (+$500, 23.8%), and Travel (+$650, 8.1%). This appears to reflect business growth rather than cost control issues.</p>
+            </div>
+          </div>
+          
+          <div>
+            <div className="text-xs font-semibold text-purple-700 mb-2">From Field-Labeled Approach:</div>
+            <div className="bg-purple-50 border border-purple-200 rounded p-3 text-sm text-slate-800">
+              <p>Total expenses increased $2,650 from $28,100 to $30,750 (9.4% growth). Key drivers: Marketing +$1,400 (11.7%), Freight +$500 (23.8%), Travel +$650 (8.1%). The increase is consistent with planned business expansion.</p>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
@@ -2733,7 +2742,7 @@ Question: ${question}`;
               'RELIABLE',
               `<p class="text-green-700"><strong>✓ Benefits:</strong> Structured, validatable, predictable. Perfect for systems that need to process the output programmatically.</p>`
             )}
-            {page.approach === 'hybrid' && !results && (
+            {page.approach === 'hybrid' && (
               <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-300 rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
                   <Zap className="w-6 h-6 text-purple-600" />
@@ -2814,7 +2823,10 @@ Question: ${question}`;
 
                 {/* Behind the scenes code */}
                 <div className="mt-4 bg-slate-50 border border-slate-300 rounded-lg p-4">
-                  <h5 className="text-sm font-semibold text-slate-800 mb-3">📋 What's Happening Behind the Scenes:</h5>
+                  <h5 className="text-sm font-semibold text-slate-800 mb-2">📋 What's Happening Behind the Scenes:</h5>
+                  <p className="text-xs text-slate-600 italic mb-3">
+                    Note: This is simplified pseudocode to illustrate the concept. Actual implementation would require additional error handling, state management, and infrastructure.
+                  </p>
                   <div className="bg-slate-900 rounded p-3 font-mono text-xs overflow-x-auto">
                     <div className="text-slate-300 space-y-1">
                       <p className="text-green-400">// Step 1: Extended thinking (hidden from user)</p>
@@ -2886,13 +2898,13 @@ Question: ${question}`;
             )}
             
             {results && page.approach === 'hybrid' && results.hybrid && (
-              <div className="bg-white rounded-lg shadow-sm border-2 border-purple-300 overflow-hidden">
+              <div className="bg-white rounded-lg shadow-sm border-2 border-purple-300 overflow-hidden mt-6">
                 <div className="bg-purple-50 px-6 py-4 border-b border-purple-200">
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <h3 className="text-lg font-semibold text-slate-900">Hybrid Approach Result</h3>
+                      <h3 className="text-lg font-semibold text-slate-900">Hybrid Approach - Live Result</h3>
                       <p className="text-sm text-slate-600 mt-1">
-                        Extended thinking + self-review = refined output
+                        What the model produced using scratchpad → self-review → refinement
                       </p>
                     </div>
                     <span className="px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full">
@@ -2902,21 +2914,72 @@ Question: ${question}`;
                   {results.metrics && results.metrics.hybrid && renderMetrics(results.metrics.hybrid)}
                 </div>
 
+                {/* Optional: Show scratchpad thinking */}
+                <div className="border-b border-slate-200">
+                  <button
+                    onClick={() => toggleThinking("hybrid")}
+                    className="w-full px-6 py-3 flex items-center justify-between hover:bg-slate-50 transition-colors"
+                  >
+                    <span className="text-sm font-medium text-slate-700">
+                      {isThinkingExpanded("hybrid") ? "Hide scratchpad/thinking" : "Show scratchpad/thinking"}{" "}
+                      <span className="text-purple-600 text-xs ml-2">
+                        (optional - UX decides whether to expose this)
+                      </span>
+                    </span>
+                    {isThinkingExpanded("hybrid") ? (
+                      <ChevronUp className="w-4 h-4" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4" />
+                    )}
+                  </button>
+                  {isThinkingExpanded("hybrid") && (
+                    <div className="px-6 py-4 bg-yellow-50 border-t border-yellow-200">
+                      <p className="text-xs text-yellow-800 mb-2 italic">
+                        This is what happened in the "scratchpad" - hidden from users by default, but UX can choose to expose it for transparency.
+                      </p>
+                      <div className="bg-white rounded p-3 text-xs text-slate-700">
+                        <p className="font-semibold mb-2">Extended Thinking:</p>
+                        <p className="mb-2">Looking at Q2 to Q3 data: Marketing $12K→$13.4K, Travel $8K→$8.65K, Supplies $6K→$6.1K, Freight $2.1K→$2.6K. Let me verify these calculations and think about what's driving each change...</p>
+                        <p className="font-semibold mb-2 mt-3">Self-Review:</p>
+                        <p>Numbers check out. Marketing has the largest absolute impact. Freight has highest % growth. Need to make sure I provide context about whether this is concerning or expected...</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <div className="px-6 py-4">
                   <div className="prose prose-sm max-w-none">
-                    <p className="text-sm font-semibold text-green-900 mb-2">Refined Answer:</p>
+                    <p className="text-sm font-semibold text-green-900 mb-2 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5" />
+                      Refined Answer (Higher Quality):
+                    </p>
                     <div className="bg-green-50 border border-green-300 rounded p-3 text-sm">
                       {typeof results.hybrid === 'object' && results.hybrid.answer 
                         ? renderMarkdownTable(results.hybrid.answer)
                         : renderMarkdownTable(results.hybrid)}
+                    </div>
+                    
+                    <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+                      <div className="bg-blue-50 border border-blue-200 rounded p-2">
+                        <strong className="text-blue-700">✓ More Detail:</strong>
+                        <p className="text-slate-700 mt-1">Specific dollar amounts and context</p>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 rounded p-2">
+                        <strong className="text-blue-700">✓ More Accurate:</strong>
+                        <p className="text-slate-700 mt-1">Numbers verified through self-review</p>
+                      </div>
+                      <div className="bg-blue-50 border border-blue-200 rounded p-2">
+                        <strong className="text-blue-700">✓ More Actionable:</strong>
+                        <p className="text-slate-700 mt-1">Often includes recommendations</p>
+                      </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="px-6 py-4 bg-purple-50 border-t border-purple-200">
                   <p className="text-xs text-purple-800">
-                    <strong>✓ Production-Ready:</strong> The scratchpad allowed thorough analysis, the self-review ensured accuracy, 
-                    and the final synthesis produced a clear, actionable answer. This approach combines the benefits of extended thinking with polished output.
+                    <strong>✓ Production-Ready:</strong> The scratchpad allowed thorough analysis, the self-review caught potential errors, 
+                    and the final synthesis produced a clear, detailed answer. Quality improvements come from the review step, not just more verbosity.
                   </p>
                 </div>
               </div>
