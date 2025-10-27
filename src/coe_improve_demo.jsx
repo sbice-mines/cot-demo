@@ -1370,33 +1370,36 @@ Format: Show only the final refined answer (not the scratchpad or review).`;
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <h5 className="text-xs font-semibold text-green-700 mb-2">✓ What We've Solved:</h5>
-            <ul className="text-xs text-slate-700 space-y-1 ml-4">
-              <li>✓ Eliminated meta-reasoning and process narration</li>
-              <li>✓ Removed technical jargon and system internals</li>
-              <li>✓ Created clear, logical structure</li>
-              <li>✓ Made thinking verifiable and scannable</li>
-              <li>✓ Answer quality maintained (sometimes improved)</li>
-            </ul>
+        <div className="bg-slate-50 border-2 border-slate-300 rounded-lg p-4">
+          <h5 className="text-sm font-semibold text-slate-900 mb-3">Overall Assessment</h5>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white rounded-lg p-3 border border-green-300">
+              <h6 className="text-xs font-semibold text-green-700 mb-2">✓ What We've Solved:</h6>
+              <ul className="text-xs text-slate-700 space-y-1 ml-4">
+                <li>✓ Eliminated meta-reasoning and process narration</li>
+                <li>✓ Removed technical jargon and system internals</li>
+                <li>✓ Created clear, logical structure</li>
+                <li>✓ Made thinking verifiable and scannable</li>
+                <li>✓ Answer quality maintained (sometimes improved)</li>
+              </ul>
+            </div>
+            <div className="bg-white rounded-lg p-3 border border-orange-300">
+              <h6 className="text-xs font-semibold text-orange-700 mb-2">⚠️ What Could Still Improve:</h6>
+              <ul className="text-xs text-slate-700 space-y-1 ml-4">
+                <li>→ Answer accuracy could be higher with review step</li>
+                <li>→ Numbers could be double-checked systematically</li>
+                <li>→ Insights could be more refined/polished</li>
+                <li>→ For production: need validation & quality gates</li>
+                <li>→ Extended thinking might catch edge cases better</li>
+              </ul>
+            </div>
           </div>
-          <div>
-            <h5 className="text-xs font-semibold text-orange-700 mb-2">⚠️ What Could Still Improve:</h5>
-            <ul className="text-xs text-slate-700 space-y-1 ml-4">
-              <li>→ Answer accuracy could be higher with review step</li>
-              <li>→ Numbers could be double-checked systematically</li>
-              <li>→ Insights could be more refined/polished</li>
-              <li>→ For production: need validation & quality gates</li>
-              <li>→ Extended thinking might catch edge cases better</li>
-            </ul>
-          </div>
+          
+          <p className="text-xs text-slate-600 mt-3 italic bg-white rounded p-2 border border-slate-300">
+            Query synthesis is a major improvement and requires no engineering. But for production systems with higher quality bars, 
+            the Hybrid approach adds self-review and refinement...
+          </p>
         </div>
-        
-        <p className="text-xs text-slate-600 mt-3 italic">
-          Query synthesis is a major improvement and requires no engineering. But for production systems with higher quality bars, 
-          the Hybrid approach adds self-review and refinement...
-        </p>
       </div>
 
       <div className="bg-green-50 border border-green-200 rounded-lg p-5 mt-6">
@@ -2157,63 +2160,70 @@ Format: Show only the final refined answer (not the scratchpad or review).`;
           Key Takeaways
         </h1>
         <p className="text-lg text-slate-600">
-          Comparing the four approaches to Chain of Thought
+          Approaches to shaping Chain of Thought
         </p>
       </div>
 
-      {results && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {['raw', 'instructed', 'coded', 'hybrid'].map((approach) => (
-            <div key={approach} className="bg-white rounded-lg shadow-sm border border-slate-200 p-4">
-              <h3 className="font-semibold text-slate-900 mb-3 capitalize">{approach === 'instructed' ? 'Prompt-Shaped' : approach === 'coded' ? 'Code-Structured' : approach}</h3>
-              {renderMetrics(results.metrics[approach])}
-            </div>
-          ))}
-        </div>
-      )}
+      <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-5 mb-6">
+        <p className="text-sm text-blue-900">
+          <Info className="w-5 h-5 inline mr-2" />
+          <strong>Important:</strong> This presentation shows one hypothesis for approaching Chain of Thought design. 
+          Other valid approaches and frameworks exist. The goal is to demonstrate UX's role in shaping model reasoning, not to prescribe the only solution.
+        </p>
+      </div>
 
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">💡 Key Insights</h3>
+        <h3 className="text-xl font-semibold text-slate-900 mb-4">💡 What We've Learned</h3>
         <div className="space-y-4 text-sm text-slate-700">
           <div className="flex items-start gap-3">
-            <Shield className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong className="text-slate-900">Security First:</strong> Raw CoT exposes system internals 
-              that attackers can exploit for prompt injection and privilege escalation.
+              <strong className="text-slate-900">Start with First Principles:</strong> Ask "Is this clear? Helpful? Relevant?" 
+              before worrying about security or performance. User-centered questions guide all decisions.
             </div>
           </div>
           <div className="flex items-start gap-3">
             <Zap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong className="text-slate-900">Prompt Engineering Wins:</strong> Well-crafted prompts 
-              deliver 80% of the value with minimal complexity - start here.
+              <strong className="text-slate-900">Voice & Tone Has Limits:</strong> Friendlier language helps readability, 
+              but doesn't address structural issues. Need query synthesis for deeper improvements.
             </div>
           </div>
           <div className="flex items-start gap-3">
             <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong className="text-slate-900">Structure for Reliability:</strong> Code-structured responses 
-              enable validation, testing, and predictable behavior in production.
+              <strong className="text-slate-900">UX Has Many Tools:</strong> Natural language instructions, field-labeled schemas, 
+              and other paradigms give content designers control over how models think - not just how they sound.
             </div>
           </div>
           <div className="flex items-start gap-3">
             <ArrowRight className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div>
-              <strong className="text-slate-900">Hybrid for Production:</strong> Combine prompt shaping 
-              with code structure for the best user experience and system reliability.
+              <strong className="text-slate-900">Hybrid Requires Collaboration:</strong> Query synthesis is UX-owned. 
+              Hybrid approaches need Eng to build infrastructure and UX to design the content. The handshake creates production-grade solutions.
             </div>
           </div>
         </div>
       </div>
 
       <div className="bg-white border border-slate-200 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">Recommendations</h3>
+        <h3 className="text-xl font-semibold text-slate-900 mb-4">Immediate Next Steps</h3>
         <div className="space-y-3 text-sm text-slate-700">
-          <p><strong>For MVP/Prototypes:</strong> Start with Prompt-Shaped approach - fast to implement and dramatically better than raw CoT.</p>
-          <p><strong>For Production Systems:</strong> Use Hybrid approach - structured for reliability, shaped for UX.</p>
-          <p><strong>For High-Security Applications:</strong> Never expose raw thinking. Always use structured responses with validation.</p>
-          <p><strong>For Content Teams:</strong> The "Model UX Zone" (prompt presets) lets non-engineers control tone and format.</p>
+          <p><strong>1. Audit Current CoT:</strong> Review where raw thinking is currently exposed. Use the first principles questions (Is it clear? Helpful? Relevant?) to assess each instance.</p>
+          <p><strong>2. Start with Quick Wins:</strong> Implement query synthesis for high-visibility features. No engineering required - content designers can do this today.</p>
+          <p><strong>3. Document Your Schema:</strong> If using field-labeled approaches, document which fields matter to users and why. This becomes a reusable pattern.</p>
+          <p><strong>4. Consider Hybrid for Critical Paths:</strong> For features where answer quality is paramount, explore Eng+UX collaboration on scratchpad approaches.</p>
+          <p><strong>5. Measure Impact:</strong> Track user feedback, error rates, and trust signals to validate that CoT improvements are working.</p>
         </div>
+      </div>
+
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-lg p-5 mt-6">
+        <h3 className="text-lg font-semibold text-amber-900 mb-3">Remember</h3>
+        <p className="text-sm text-slate-700">
+          This is one framework among many. The specific approaches (voice/tone, query synthesis, hybrid) are less important than the 
+          underlying insight: <strong>UX can design how models think, not just how they communicate.</strong> Your context, users, and 
+          constraints will shape which specific techniques work best for you.
+        </p>
       </div>
     </div>
   );
@@ -3026,12 +3036,6 @@ Question: ${question}`;
                   }`}></div>
                   {apiKeyStatus === "ready" ? "LIVE API" : "DEMO MODE"}
                 </div>
-                <button
-                  onClick={() => setPresentationMode(false)}
-                  className="text-sm text-slate-600 hover:text-slate-900 underline"
-                >
-                  View All Approaches
-                </button>
               </div>
             </div>
 
