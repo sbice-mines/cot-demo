@@ -435,16 +435,28 @@ Your expenses increased 10.2% from Q2 ($28,100) to Q3 ($30,750). Top drivers: Ma
       }
     };
 
+    const hybridResponse = `Your expenses increased $2,750 from $28,100 to $30,850 (9.8% growth). The three key drivers are:
+
+• **Marketing**: +$1,400 (11.7%) - Strategic campaign investments aligned with Q3 product launches
+• **Freight**: +$500 (23.8%) - External cost pressures from fuel prices and carrier rate adjustments  
+• **Travel**: +$650 (8.1%) - Increased business development activity
+
+**Context**: This growth pattern is consistent with planned business expansion. Marketing's absolute impact is highest, though Freight shows the steepest percentage increase due to market conditions.
+
+**Recommendation**: Monitor Freight costs closely in Q4 as carrier rates may continue rising. Marketing ROI from Q3 campaigns should be evaluated to justify the continued investment level.`;
+
     const metrics = {
       raw: { tokens: estimateTokens(rawResponse), ttft: 180, latency: 850 },
       instructed: { tokens: estimateTokens(instructedResponse), ttft: 180, latency: 650 },
-      coded: { tokens: estimateTokens(JSON.stringify(codedResponse)), ttft: 180, latency: 600 }
+      coded: { tokens: estimateTokens(JSON.stringify(codedResponse)), ttft: 180, latency: 600 },
+      hybrid: { tokens: estimateTokens(hybridResponse), ttft: 220, latency: 950 }
     };
 
     return { 
       raw: rawResponse, 
       instructed: instructedResponse, 
-      coded: codedResponse, 
+      coded: codedResponse,
+      hybrid: hybridResponse,
       metrics 
     };
   };
@@ -599,12 +611,35 @@ Output ONLY valid JSON in this exact structure (no other text):
 
 Respond ONLY with valid JSON.`;
 
+      // HYBRID - Extended thinking with self-review
+      const hybridPrompt = `You are a financial analyst. You'll think through this in stages:
+
+STAGE 1 - Extended Thinking (your scratchpad):
+Think deeply about the expense data and question below. Explore different angles, verify your logic.
+
+Data:
+${dataString}
+
+Question: ${question}
+
+STAGE 2 - Self-Review:
+Review your thinking. Ask yourself:
+- Are my numbers accurate?
+- Is my reasoning clear?
+- Have I answered the question fully?
+
+STAGE 3 - Refined Answer:
+Based on your analysis and review, provide a clear, polished answer.
+
+Format: Show only the final refined answer (not the scratchpad or review).`;
+
       setLoadingStep("Calling Claude API...");
       
-      const [raw, instructed, codedRaw] = await Promise.all([
+      const [raw, instructed, codedRaw, hybrid] = await Promise.all([
         callClaude("You are a helpful AI assistant.", rawPrompt),
         callClaude("You are a financial analyst.", instructedPrompt),
         callClaude("You are a structured data API.", codedPrompt),
+        callClaude("You are a financial analyst.", hybridPrompt),
       ]);
 
       setLoadingStep("Processing results...");
@@ -651,9 +686,14 @@ Respond ONLY with valid JSON.`;
           ttft: 180,
           latency: 600,
         },
+        hybrid: {
+          tokens: estimateTokens(hybrid),
+          ttft: 220, // Slightly longer due to multi-step
+          latency: 950,
+        },
       };
 
-      setResults({ raw, instructed, coded: codedData, metrics });
+      setResults({ raw, instructed, coded: codedData, hybrid, metrics });
     } catch (err) {
       console.warn("API calls failed, using demo responses:", err.message);
       
@@ -1321,14 +1361,33 @@ Respond ONLY with valid JSON.`;
           </p>
         </div>
 
-        <h5 className="text-xs font-semibold text-slate-700 mb-2">Why This Works for Users:</h5>
-        <ul className="text-xs text-slate-700 space-y-1 ml-4">
-          <li>✓ <strong>Clear path to answer:</strong> CoT shows logical reasoning steps, not meta-commentary</li>
-          <li>✓ <strong>Verifiable insights:</strong> Users can check the numbers and logic themselves</li>
-          <li>✓ <strong>Scannable structure:</strong> Whether steps or fields, key info is easy to find</li>
-          <li>✓ <strong>Professional & focused:</strong> No jargon, no system internals, just analysis</li>
-          <li>✓ <strong>Builds trust:</strong> Transparency without overwhelming or confusing</li>
-        </ul>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <h5 className="text-xs font-semibold text-green-700 mb-2">✓ What We've Solved:</h5>
+            <ul className="text-xs text-slate-700 space-y-1 ml-4">
+              <li>✓ Eliminated meta-reasoning and process narration</li>
+              <li>✓ Removed technical jargon and system internals</li>
+              <li>✓ Created clear, logical structure</li>
+              <li>✓ Made thinking verifiable and scannable</li>
+              <li>✓ Answer quality maintained (sometimes improved)</li>
+            </ul>
+          </div>
+          <div>
+            <h5 className="text-xs font-semibold text-orange-700 mb-2">⚠️ What Could Still Improve:</h5>
+            <ul className="text-xs text-slate-700 space-y-1 ml-4">
+              <li>→ Answer accuracy could be higher with review step</li>
+              <li>→ Numbers could be double-checked systematically</li>
+              <li>→ Insights could be more refined/polished</li>
+              <li>→ For production: need validation & quality gates</li>
+              <li>→ Extended thinking might catch edge cases better</li>
+            </ul>
+          </div>
+        </div>
+        
+        <p className="text-xs text-slate-600 mt-3 italic">
+          Query synthesis is a major improvement and requires no engineering. But for production systems with higher quality bars, 
+          the Hybrid approach adds self-review and refinement...
+        </p>
       </div>
 
       <div className="bg-green-50 border border-green-200 rounded-lg p-5 mt-6">
