@@ -975,10 +975,9 @@ Respond ONLY with valid JSON.`;
     { id: 'what-is-cot', title: 'What is Chain of Thought?', subtitle: 'Illusion of Labor or Useful Artifact?' },
     { id: 'raw', title: 'Raw CoT', subtitle: 'Current State: Multiple Opportunities for Improvement', approach: 'raw' },
     { id: 'voice-tone', title: 'Voice & Tone Shaped', subtitle: 'First Attempt: Better Readability, Same Underlying Issues', approach: 'voice' },
-    { id: 'synthesis-playground', title: 'Query Synthesis Playground', subtitle: 'Exploring Different Instruction Approaches' },
-    { id: 'query-synthesis', title: 'Query Synthesis Result', subtitle: 'Restructuring How the Model Thinks', approach: 'instructed' },
-    { id: 'code', title: 'Code-Structured', subtitle: 'Systematic Validation & Structure', approach: 'coded' },
-    { id: 'hybrid', title: 'Hybrid Approach', subtitle: 'Scratchpad → Self-Review → Refined Output', approach: 'hybrid' },
+    { id: 'synthesis-playground', title: 'Query Synthesis', subtitle: 'UX Tools Beyond Voice & Tone' },
+    { id: 'synthesis-practice', title: 'Query Synthesis in Practice', subtitle: 'What These Instructions Actually Produce' },
+    { id: 'hybrid', title: 'Hybrid Approach', subtitle: 'The Eng + UX Handshake: Scratchpad → Self-Review → Refined Output', approach: 'hybrid' },
     { id: 'summary', title: 'Summary', subtitle: 'Key Takeaways & Recommendations' },
   ];
 
@@ -1223,22 +1222,173 @@ Respond ONLY with valid JSON.`;
     </div>
   );
 
-  // Query Synthesis Playground Page
-  const renderSynthesisPlayground = () => (
+  // Query Synthesis in Practice Page
+  const renderSynthesisPractice = () => (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold text-slate-900 mb-2">Query Synthesis Playground</h1>
-        <p className="text-lg text-slate-600">Exploring how different instruction approaches shape reasoning</p>
+        <h1 className="text-4xl font-bold text-slate-900 mb-2">Query Synthesis in Practice</h1>
+        <p className="text-lg text-slate-600">Comparing outputs from different instruction approaches</p>
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <p className="text-sm text-blue-900 mb-2">
+        <p className="text-sm text-blue-900">
           <Info className="w-4 h-4 inline mr-2" />
-          <strong>The Shift:</strong> Instead of changing voice/tone, we're restructuring <em>how</em> the model thinks about the question.
+          Both approaches from page 5 produce structured, focused CoT - but with different organizational styles. 
+          Notice how both avoid meta-reasoning and stay data-focused.
         </p>
-        <p className="text-xs text-blue-800">
-          <strong>Note:</strong> These are just two examples of query synthesis approaches - there are many other ways to structure thinking. 
-          The point is that UX has numerous levers and tools beyond just finessing tone. This page demonstrates the range of options available to content designers.
+      </div>
+
+      <div className="grid grid-cols-2 gap-6">
+        {/* Natural Language Result */}
+        <div className="bg-white rounded-lg shadow-sm border-2 border-indigo-300 overflow-hidden">
+          <div className="bg-indigo-50 px-4 py-3 border-b border-indigo-200">
+            <h3 className="font-semibold text-slate-900">Natural Language Output</h3>
+            <p className="text-xs text-slate-600 mt-1">Step-by-step narrative format</p>
+          </div>
+          
+          <div className="px-4 py-4 text-sm">
+            <div className="bg-indigo-50 rounded p-3 mb-3">
+              <div className="text-slate-800 space-y-2 text-xs">
+                <p><strong>Step 1 - What changed:</strong></p>
+                <p className="ml-3">Marketing: Q2 $12,000 → Q3 $13,400 (+$1,400)</p>
+                <p className="ml-3">Freight: Q2 $2,100 → Q3 $2,600 (+$500)</p>
+                <p className="ml-3">Travel: Q2 $8,000 → Q3 $8,650 (+$650)</p>
+                
+                <p className="mt-2"><strong>Step 2 - Impact:</strong></p>
+                <p className="ml-3">Total increase: $2,650 (9.4%)</p>
+                
+                <p className="mt-2"><strong>Step 3 - Ranked drivers:</strong></p>
+                <p className="ml-3">1. Marketing (largest absolute)</p>
+                <p className="ml-3">2. Freight (highest %)</p>
+              </div>
+            </div>
+            
+            <div className="text-xs text-slate-600 space-y-1">
+              <p><strong className="text-indigo-900">Characteristics:</strong></p>
+              <ul className="ml-4">
+                <li>• Follows logical progression</li>
+                <li>• Easy to read sequentially</li>
+                <li>• Flexible structure</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Field-Labeled Result */}
+        <div className="bg-white rounded-lg shadow-sm border-2 border-purple-300 overflow-hidden">
+          <div className="bg-purple-50 px-4 py-3 border-b border-purple-200">
+            <h3 className="font-semibold text-slate-900">Field-Labeled Output</h3>
+            <p className="text-xs text-slate-600 mt-1">Structured with consistent fields</p>
+          </div>
+          
+          <div className="px-4 py-4 text-sm">
+            <div className="bg-purple-50 rounded p-3 mb-3">
+              <div className="text-slate-800 space-y-2 text-xs">
+                <p><strong className="text-purple-700">Process:</strong> Q2 to Q3 expense comparison</p>
+                <p><strong className="text-purple-700">Accounting Method:</strong> Period-over-period delta</p>
+                <p><strong className="text-purple-700">Key Drivers:</strong></p>
+                <p className="ml-3">• Marketing: +$1,400 (11.7%)</p>
+                <p className="ml-3">• Freight: +$500 (23.8%)</p>
+                <p className="ml-3">• Travel: +$650 (8.1%)</p>
+                <p><strong className="text-purple-700">Patterns of Note:</strong></p>
+                <p className="ml-3">Freight highest %, Marketing largest absolute</p>
+              </div>
+            </div>
+            
+            <div className="text-xs text-slate-600 space-y-1">
+              <p><strong className="text-purple-900">Characteristics:</strong></p>
+              <ul className="ml-4">
+                <li>• Scannable labeled sections</li>
+                <li>• Consistent field placement</li>
+                <li>• Easy to find specific info</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Unified Answer */}
+      <div className="bg-white border-2 border-green-400 rounded-lg p-6 mt-6">
+        <h4 className="text-sm font-semibold text-green-900 mb-3 flex items-center gap-2">
+          <CheckCircle className="w-5 h-5" />
+          The Answer (Works with Either Approach)
+        </h4>
+        <div className="bg-green-50 rounded p-4 text-sm text-slate-800 mb-4">
+          <p className="font-semibold mb-2">Why Your Expenses Increased from Q2 to Q3</p>
+          <p>
+            Total expenses increased $2,650 from $28,100 to $30,750 (9.4% growth). Key drivers: Marketing +$1,400 (11.7%), 
+            Freight +$500 (23.8%), Travel +$650 (8.1%). The increase appears consistent with business growth rather than isolated anomalies.
+          </p>
+        </div>
+
+        <h5 className="text-xs font-semibold text-slate-700 mb-2">Why This Works for Users:</h5>
+        <ul className="text-xs text-slate-700 space-y-1 ml-4">
+          <li>✓ <strong>Clear path to answer:</strong> CoT shows logical reasoning steps, not meta-commentary</li>
+          <li>✓ <strong>Verifiable insights:</strong> Users can check the numbers and logic themselves</li>
+          <li>✓ <strong>Scannable structure:</strong> Whether steps or fields, key info is easy to find</li>
+          <li>✓ <strong>Professional & focused:</strong> No jargon, no system internals, just analysis</li>
+          <li>✓ <strong>Builds trust:</strong> Transparency without overwhelming or confusing</li>
+        </ul>
+      </div>
+
+      <div className="bg-green-50 border border-green-200 rounded-lg p-5 mt-6">
+        <h4 className="font-semibold text-green-900 mb-3">Key Observations</h4>
+        <div className="grid grid-cols-3 gap-4 text-xs text-slate-700">
+          <div>
+            <strong className="text-green-800">Both Eliminate:</strong>
+            <ul className="mt-1 ml-4 space-y-0.5">
+              <li>✓ Meta-reasoning</li>
+              <li>✓ Process narration</li>
+              <li>✓ Technical jargon</li>
+              <li>✓ System internals</li>
+            </ul>
+          </div>
+          <div>
+            <strong className="text-green-800">Both Provide:</strong>
+            <ul className="mt-1 ml-4 space-y-0.5">
+              <li>✓ Data-focused thinking</li>
+              <li>✓ Clear analytical structure</li>
+              <li>✓ Actionable insights</li>
+              <li>✓ Professional presentation</li>
+            </ul>
+          </div>
+          <div>
+            <strong className="text-green-800">UX Owns This:</strong>
+            <ul className="mt-1 ml-4 space-y-0.5">
+              <li>✓ No engineering required</li>
+              <li>✓ Content designer-driven</li>
+              <li>✓ Rapid iteration possible</li>
+              <li>✓ Full control over structure</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+        <p className="text-sm text-blue-900">
+          <ArrowRight className="w-4 h-4 inline mr-2" />
+          <strong>What's Next:</strong> Query synthesis is powerful and UX-owned. But for production systems that need even more sophistication, 
+          there's a hybrid approach where Engineering and UX collaborate on extended thinking with self-review...
+        </p>
+      </div>
+    </div>
+  );
+
+  // Query Synthesis Page
+  const renderSynthesisPlayground = () => (
+    <div className="max-w-6xl mx-auto space-y-6">
+      <div className="text-center mb-6">
+        <h1 className="text-4xl font-bold text-slate-900 mb-2">Query Synthesis</h1>
+        <p className="text-lg text-slate-600">UX Tools Beyond Voice & Tone</p>
+      </div>
+
+      <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-lg p-4 mb-6">
+        <p className="text-sm text-green-900 mb-2">
+          <CheckCircle className="w-5 h-5 inline mr-2" />
+          <strong>Can we do better than voice adjustments? Yes!</strong> Instead of just changing how the CoT sounds, we can restructure <em>how</em> the model thinks about the question.
+        </p>
+        <p className="text-xs text-green-800">
+          Here are two examples of query synthesis approaches. There are many other ways to structure thinking - the point is that UX has numerous levers and tools beyond just finessing tone.
         </p>
       </div>
 
@@ -2016,6 +2166,10 @@ Respond ONLY with valid JSON.`;
       return renderSynthesisPlayground();
     }
 
+    if (page.id === 'synthesis-practice') {
+      return renderSynthesisPractice();
+    }
+
     if (page.id === 'summary') {
       return renderSummaryPage();
     }
@@ -2029,14 +2183,16 @@ Respond ONLY with valid JSON.`;
         </div>
 
         {/* Configuration Section */}
-        {/* Raw CoT and Voice & Tone use static examples - no configuration needed */}
-        {(page.approach === 'raw' || page.approach === 'voice') ? (
+        {/* Some pages use static examples - no configuration needed */}
+        {(page.approach === 'raw' || page.approach === 'voice' || page.id === 'synthesis-practice') ? (
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <p className="text-sm text-blue-800">
               <Info className="w-4 h-4 inline mr-2" />
               {page.approach === 'raw' 
                 ? 'This page shows a static annotated example of Raw CoT. Hover over underlined text below to see specific issues.'
-                : 'This page shows a static example demonstrating how voice & tone changes improve readability but miss deeper structural opportunities.'}
+                : page.approach === 'voice'
+                ? 'This page shows a static example demonstrating how voice & tone changes improve readability but miss deeper structural opportunities.'
+                : 'This page shows static examples comparing the two instruction approaches from the previous page.'}
             </p>
           </div>
         ) : !results ? (
@@ -2092,7 +2248,7 @@ Respond ONLY with valid JSON.`;
                 </div>
                 <div className="text-sm text-blue-700">{loadingStep}</div>
                 <div className="text-xs text-blue-600 mt-2">
-                  Running all 3 approaches in parallel...
+                  This may take 10-15 seconds...
                 </div>
               </div>
             )}
@@ -2412,13 +2568,16 @@ Question: ${question}`;
         )}
 
         {/* Result for current approach */}
-        {page.approach && (
+        {(page.approach || page.id === 'synthesis-practice') && (
           <div className="mt-6">
             {/* Raw CoT uses static annotated example with hotspots */}
             {page.approach === 'raw' && renderAnnotatedRawCoT()}
             
             {/* Voice & Tone example - static */}
             {page.approach === 'voice' && renderVoiceToneExample()}
+            
+            {/* Query Synthesis in Practice - handled by renderCurrentPage */}
+            {/* (page is rendered directly, not via approach) */}
             
             {/* Other approaches use API results */}
             {results && page.approach === 'instructed' && (
@@ -2519,11 +2678,19 @@ Question: ${question}`;
               <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-300 rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
                   <Zap className="w-6 h-6 text-purple-600" />
-                  How Hybrid Approach Works
+                  The Eng + UX Handshake
                 </h3>
                 <p className="text-sm text-slate-700 mb-4">
-                  The Hybrid approach combines extended thinking with self-review to produce refined, production-ready output.
+                  The Hybrid approach requires collaboration: <strong>Engineering implements the mechanism</strong> (extended thinking, self-review step), 
+                  while <strong>UX shapes the content</strong> (what questions guide the scratchpad, what gets exposed).
                 </p>
+                
+                <div className="bg-amber-50 border border-amber-300 rounded p-3 mb-4 text-xs">
+                  <p className="text-amber-900">
+                    <strong>Key Difference:</strong> Query synthesis (previous pages) is UX-only. Hybrid requires engineering to build the scratchpad infrastructure, 
+                    then UX designs what happens inside it.
+                  </p>
+                </div>
                 
                 {/* Visual flow diagram */}
                 <div className="bg-white rounded-lg p-4 border border-purple-200">
@@ -2580,22 +2747,129 @@ Question: ${question}`;
                 </div>
 
                 <div className="mt-4 bg-purple-100 border border-purple-300 rounded-lg p-3">
-                  <p className="text-xs text-purple-900">
-                    <strong>💡 Key Advantage:</strong> The self-review step acts like an editor reviewing a first draft. 
+                  <p className="text-xs text-purple-900 mb-2">
+                    <strong>💡 How It Works:</strong> The self-review step acts like an editor reviewing a first draft. 
                     The model can think freely in the scratchpad, then refine its output for clarity and accuracy.
+                  </p>
+                </div>
+
+                {/* Behind the scenes code */}
+                <div className="mt-4 bg-slate-50 border border-slate-300 rounded-lg p-4">
+                  <h5 className="text-sm font-semibold text-slate-800 mb-3">📋 What's Happening Behind the Scenes:</h5>
+                  <div className="bg-slate-900 rounded p-3 font-mono text-xs overflow-x-auto">
+                    <div className="text-slate-300 space-y-1">
+                      <p className="text-green-400">// Step 1: Extended thinking (hidden from user)</p>
+                      <p>scratchpad = model.generate(</p>
+                      <p className="ml-3">prompt: <span className="text-yellow-300">"Think deeply about this analysis..."</span>,</p>
+                      <p className="ml-3">extended_thinking: <span className="text-blue-400">true</span></p>
+                      <p>)</p>
+                      <p></p>
+                      <p className="text-green-400">// Step 2: Self-review</p>
+                      <p>review = model.generate(</p>
+                      <p className="ml-3">prompt: <span className="text-yellow-300">"Review your thinking. Are the numbers accurate?</span></p>
+                      <p className="ml-3"><span className="text-yellow-300">         Is the answer clear and actionable?"</span>,</p>
+                      <p className="ml-3">context: scratchpad</p>
+                      <p>)</p>
+                      <p></p>
+                      <p className="text-green-400">// Step 3: Synthesize refined answer</p>
+                      <p>final_answer = model.generate(</p>
+                      <p className="ml-3">prompt: <span className="text-yellow-300">"Based on your analysis and review,</span></p>
+                      <p className="ml-3"><span className="text-yellow-300">         provide a clear, concise answer"</span>,</p>
+                      <p className="ml-3">context: [scratchpad, review]</p>
+                      <p>)</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Eng vs UX roles */}
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="bg-blue-50 border border-blue-300 rounded-lg p-3">
+                    <h5 className="text-xs font-semibold text-blue-900 mb-2">What Engineering Does:</h5>
+                    <ul className="text-xs text-slate-700 space-y-1">
+                      <li>• Implements multi-step inference pipeline</li>
+                      <li>• Creates scratchpad layer (hidden)</li>
+                      <li>• Builds self-review mechanism</li>
+                      <li>• Handles context passing between steps</li>
+                    </ul>
+                  </div>
+                  <div className="bg-green-50 border border-green-300 rounded-lg p-3">
+                    <h5 className="text-xs font-semibold text-green-900 mb-2">What UX Does:</h5>
+                    <ul className="text-xs text-slate-700 space-y-1">
+                      <li>• Writes prompts for each step</li>
+                      <li>• Defines self-review criteria</li>
+                      <li>• Shapes final output structure</li>
+                      <li>• Decides what (if anything) to expose</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Answer improvement comparison */}
+                <div className="mt-4 bg-white border-2 border-green-400 rounded-lg p-4">
+                  <h5 className="text-sm font-semibold text-green-900 mb-3">How the Answer Gets Improved:</h5>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <div className="text-xs font-semibold text-slate-600 mb-2">Before Self-Review:</div>
+                      <div className="bg-slate-50 rounded p-2 text-xs text-slate-700">
+                        "Expenses increased 9.4%. Marketing and Freight were the main drivers."
+                      </div>
+                      <p className="text-xs text-orange-700 mt-1">→ Vague, missing context</p>
+                    </div>
+                    <div>
+                      <div className="text-xs font-semibold text-slate-600 mb-2">After Self-Review:</div>
+                      <div className="bg-green-50 rounded p-2 text-xs text-slate-700">
+                        "Total expenses increased $2,650 from $28,100 to $30,750 (9.4% growth). Key drivers: Marketing +$1,400 (11.7%), Freight +$500 (23.8%). The increase appears consistent with business growth."
+                      </div>
+                      <p className="text-xs text-green-700 mt-1">→ Specific numbers, clear context, actionable insight</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {results && page.approach === 'hybrid' && results.hybrid && (
+              <div className="bg-white rounded-lg shadow-sm border-2 border-purple-300 overflow-hidden">
+                <div className="bg-purple-50 px-6 py-4 border-b border-purple-200">
+                  <div className="flex items-center justify-between mb-3">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-900">Hybrid Approach Result</h3>
+                      <p className="text-sm text-slate-600 mt-1">
+                        Extended thinking + self-review = refined output
+                      </p>
+                    </div>
+                    <span className="px-3 py-1 bg-purple-600 text-white text-xs font-medium rounded-full">
+                      PRODUCTION
+                    </span>
+                  </div>
+                  {results.metrics && results.metrics.hybrid && renderMetrics(results.metrics.hybrid)}
+                </div>
+
+                <div className="px-6 py-4">
+                  <div className="prose prose-sm max-w-none">
+                    <p className="text-sm font-semibold text-green-900 mb-2">Refined Answer:</p>
+                    <div className="bg-green-50 border border-green-300 rounded p-3 text-sm">
+                      {typeof results.hybrid === 'object' && results.hybrid.answer 
+                        ? renderMarkdownTable(results.hybrid.answer)
+                        : renderMarkdownTable(results.hybrid)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="px-6 py-4 bg-purple-50 border-t border-purple-200">
+                  <p className="text-xs text-purple-800">
+                    <strong>✓ Production-Ready:</strong> The scratchpad allowed thorough analysis, the self-review ensured accuracy, 
+                    and the final synthesis produced a clear, actionable answer. This approach combines the benefits of extended thinking with polished output.
                   </p>
                 </div>
               </div>
             )}
             
-            {results && page.approach === 'hybrid' && renderApproachCard(
-              'hybrid',
-              results.hybrid,
-              'Hybrid Approach',
-              'Extended thinking + shaped output = production ready',
-              'purple',
-              'PRODUCTION',
-              `<p class="text-purple-700"><strong>✓ Benefits:</strong> Best of both worlds - thorough reasoning with clean, structured output. Ready for production use.</p>`
+            {results && page.approach === 'hybrid' && !results.hybrid && (
+              <div className="bg-amber-50 border border-amber-300 rounded-lg p-4">
+                <p className="text-sm text-amber-900">
+                  <AlertCircle className="w-5 h-5 inline mr-2" />
+                  Hybrid results not available. This approach requires running the full analysis from an earlier page.
+                </p>
+              </div>
             )}
           </div>
         )}
