@@ -1232,10 +1232,13 @@ Respond ONLY with valid JSON.`;
       </div>
 
       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-        <p className="text-sm text-blue-900">
+        <p className="text-sm text-blue-900 mb-2">
           <Info className="w-4 h-4 inline mr-2" />
-          <strong>The Shift:</strong> Instead of changing voice/tone, we're restructuring <em>how</em> the model thinks about the question. 
-          Here are two approaches to query synthesis and reasoning scaffolding.
+          <strong>The Shift:</strong> Instead of changing voice/tone, we're restructuring <em>how</em> the model thinks about the question.
+        </p>
+        <p className="text-xs text-blue-800">
+          <strong>Note:</strong> These are just two examples of query synthesis approaches - there are many other ways to structure thinking. 
+          The point is that UX has numerous levers and tools beyond just finessing tone. This page demonstrates the range of options available to content designers.
         </p>
       </div>
 
@@ -1244,27 +1247,34 @@ Respond ONLY with valid JSON.`;
         <div className="bg-white rounded-lg shadow-sm border-2 border-indigo-300 overflow-hidden">
           <div className="bg-indigo-50 px-4 py-3 border-b border-indigo-200">
             <h3 className="font-semibold text-slate-900">Natural Language Instructions</h3>
-            <p className="text-xs text-slate-600 mt-1">Familiar, easy-to-understand approach</p>
+            <p className="text-xs text-slate-600 mt-1">Conversational approach - familiar to UX/content teams</p>
           </div>
           
           <div className="px-4 py-4">
-            <h4 className="text-xs font-semibold text-slate-700 mb-2">Instruction Template:</h4>
-            <div className="bg-slate-50 border border-slate-200 rounded p-3 text-xs font-mono mb-4">
-              <div className="text-slate-700 space-y-2">
-                <p>Analyze the expense data in three focused steps:</p>
-                <p className="ml-3">1. Identify what changed (category and amounts)</p>
-                <p className="ml-3">2. Calculate the impact (percentages and totals)</p>
-                <p className="ml-3">3. Rank the drivers (which matters most)</p>
-                <p className="mt-2">Keep thinking concise. Focus on data, not process.</p>
+            <h4 className="text-xs font-semibold text-slate-700 mb-2">Instruction Template (with typical UX preamble):</h4>
+            <div className="bg-white border border-slate-300 rounded p-3 text-xs mb-4">
+              <div className="text-slate-700 space-y-2 leading-relaxed">
+                <p><strong>Role:</strong> You are a financial analyst helping users understand their expense data.</p>
+                
+                <p><strong>Task:</strong> Analyze the expense data in a structured way that focuses on insights, not process narration.</p>
+                
+                <p><strong>Approach:</strong> Think through the analysis in three focused steps:</p>
+                <div className="ml-4 space-y-1 mt-1">
+                  <p>1. Identify what changed (category and amounts)</p>
+                  <p>2. Calculate the impact (percentages and totals)</p>
+                  <p>3. Rank the drivers (which matters most)</p>
+                </div>
+                
+                <p className="mt-2"><strong>Constraints:</strong> Keep thinking concise. Focus on data, not process description.</p>
               </div>
             </div>
 
-            <h4 className="text-xs font-semibold text-slate-700 mb-2">What This Does:</h4>
+            <h4 className="text-xs font-semibold text-slate-700 mb-2">Why Choose This Approach:</h4>
             <ul className="text-xs text-slate-700 space-y-1 ml-4 mb-4">
-              <li>✓ Gives clear analytical structure</li>
-              <li>✓ Prevents meta-reasoning</li>
-              <li>✓ Focuses on data not narration</li>
-              <li>✓ Accessible to content designers</li>
+              <li>✓ When you want general analytical structure without rigid fields</li>
+              <li>✓ When content designers need flexibility in how thinking flows</li>
+              <li>✓ Most familiar to UX teams used to writing conversational prompts</li>
+              <li>✓ Good for varied questions where exact fields might change</li>
             </ul>
 
             <h4 className="text-xs font-semibold text-slate-700 mb-2">Example CoT Output:</h4>
@@ -1291,30 +1301,58 @@ Respond ONLY with valid JSON.`;
         {/* JSON Schema Approach */}
         <div className="bg-white rounded-lg shadow-sm border-2 border-purple-300 overflow-hidden">
           <div className="bg-purple-50 px-4 py-3 border-b border-purple-200">
-            <h3 className="font-semibold text-slate-900">JSON Schema Instructions</h3>
-            <p className="text-xs text-slate-600 mt-1">Structured, field-guided approach</p>
+            <h3 className="font-semibold text-slate-900">Field-Labeled Schema Instructions</h3>
+            <p className="text-xs text-slate-600 mt-1">For content designers who want specific, consistent fields</p>
           </div>
           
           <div className="px-4 py-4">
-            <h4 className="text-xs font-semibold text-slate-700 mb-2">Instruction Template:</h4>
-            <div className="bg-slate-50 border border-slate-200 rounded p-3 text-xs mb-4">
+            <h4 className="text-xs font-semibold text-slate-700 mb-2">Instruction Template (with typical UX preamble):</h4>
+            <div className="bg-white border border-slate-300 rounded p-3 text-xs mb-4">
               <div className="text-slate-700 space-y-2 leading-relaxed">
-                <p>Use these labeled fields to structure your thinking:</p>
-                <p className="mt-2 ml-2"><strong className="text-purple-700">Process:</strong> [what comparison you're doing]</p>
-                <p className="ml-2"><strong className="text-purple-700">Accounting Method:</strong> [how you're analyzing]</p>
-                <p className="ml-2"><strong className="text-purple-700">Key Drivers:</strong> [ranked list with impacts]</p>
-                <p className="ml-2"><strong className="text-purple-700">Patterns of Note:</strong> [trends and insights]</p>
-                <p className="mt-2 text-slate-600">Focus on data, not process description.</p>
+                <p><strong>Role:</strong> You are an expert financial analyst providing structured expense analysis.</p>
+                
+                <p><strong>Task:</strong> Analyze the expense data and user's question. Provide reasoning and insights organized into specific labeled fields.</p>
+                
+                <p><strong>Output Format:</strong> You MUST structure your response using the fields defined in the JSON schema below. This ensures consistency and makes key information easy to find.</p>
+                
+                <p><strong>JSON Schema:</strong> Your response must conform to this structure:</p>
+                <div className="ml-2 mt-2 bg-slate-50 border border-slate-300 rounded p-3 font-mono text-xs">
+                  <div className="text-slate-700 space-y-0.5">
+                    <p>&#123;</p>
+                    <p className="ml-3">"expense_analysis": &#123;</p>
+                    <p className="ml-6">"thinking": &#123;</p>
+                    <p className="ml-9"><strong className="text-purple-700">"process"</strong>: "(string) What comparison you're doing",</p>
+                    <p className="ml-9"><strong className="text-purple-700">"accounting_method"</strong>: "(string) How you're analyzing"</p>
+                    <p className="ml-6">&#125;,</p>
+                    <p className="ml-6">"insights": &#123;</p>
+                    <p className="ml-9"><strong className="text-purple-700">"key_drivers"</strong>: [</p>
+                    <p className="ml-12">&#123; "category": "string", "delta": "number", "pct": "number" &#125;</p>
+                    <p className="ml-9">],</p>
+                    <p className="ml-9"><strong className="text-purple-700">"patterns_of_note"</strong>: ["(array) Trends and insights"]</p>
+                    <p className="ml-6">&#125;</p>
+                    <p className="ml-3">&#125;</p>
+                    <p>&#125;</p>
+                  </div>
+                </div>
+                
+                <p className="mt-2"><strong>Constraints:</strong> Focus on data and insights. Do not narrate your process or include meta-commentary.</p>
               </div>
             </div>
 
-            <h4 className="text-xs font-semibold text-slate-700 mb-2">What This Does:</h4>
+            <h4 className="text-xs font-semibold text-slate-700 mb-2">Why UX Teams Choose This:</h4>
             <ul className="text-xs text-slate-700 space-y-1 ml-4 mb-4">
-              <li>✓ Enforces structure via schema</li>
-              <li>✓ Labeled fields guide output</li>
-              <li>✓ Predictable, validatable format</li>
-              <li>✓ Engineering-friendly</li>
+              <li>✓ <strong>Easy iteration:</strong> Change "process" to "methodology"? Just edit the field name - no need to refactor entire instructions</li>
+              <li>✓ <strong>Modular flexibility:</strong> Add/remove fields without rewriting the whole prompt</li>
+              <li>✓ <strong>Guaranteed consistency:</strong> "Key Drivers" always appears - never buried in narrative</li>
+              <li>✓ <strong>Scannable for users:</strong> Labeled sections help users find what they need quickly</li>
             </ul>
+            
+            <div className="bg-purple-50 border border-purple-300 rounded p-2 text-xs mt-3">
+              <p className="text-purple-900">
+                <strong>UX Advantage:</strong> Instead of rewriting paragraphs of instructions, you just update field definitions. 
+                Much faster to iterate and maintain over time.
+              </p>
+            </div>
 
             <h4 className="text-xs font-semibold text-slate-700 mb-2">Example CoT Output:</h4>
             <div className="bg-purple-50 border border-purple-200 rounded p-3 text-sm">
@@ -1343,46 +1381,52 @@ Respond ONLY with valid JSON.`;
         <div className="grid grid-cols-2 gap-4 text-xs text-slate-700">
           <div>
             <strong className="text-indigo-900">Natural Language:</strong>
-            <p className="mt-1">Step-by-step narrative. Easy to read, follows a logical progression. Great for human reviewers and content teams.</p>
+            <p className="mt-1">Step-by-step instructions. Flexible flow, good for varied questions. To iterate: rewrite the step descriptions.</p>
           </div>
           <div>
-            <strong className="text-purple-900">JSON Schema:</strong>
-            <p className="mt-1">Field-labeled structure. Scannable, validatable. Great for engineering teams and automated evaluation.</p>
+            <strong className="text-purple-900">Field-Labeled Schema:</strong>
+            <p className="mt-1">Specific labeled fields. Guaranteed structure, easy to iterate. To change: just update field names/descriptions - no full rewrite needed.</p>
           </div>
         </div>
-        <p className="text-xs text-slate-700 mt-3">
-          <strong>Both approaches</strong> eliminate meta-reasoning and focus on analysis. Both produce the same answer quality. The choice depends on your team and use case.
+        <p className="text-xs text-slate-700 mt-3 bg-white rounded p-2 border border-indigo-300">
+          <strong>For Content Designers:</strong> Both eliminate meta-reasoning and structure thinking. The schema approach gives you <strong>modular control</strong> - 
+          swap out "Process" for "Methodology", add "Risk Factors" field, remove "Patterns" - all without touching the rest of the instruction. 
+          This modularity makes it much easier to iterate and maintain.
         </p>
       </div>
 
       <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-300 rounded-lg p-5 mt-6">
         <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
           <CheckCircle className="w-5 h-5" />
-          The Power of Query Synthesis
+          UX Control Beyond Tone
         </h4>
+        <p className="text-sm text-slate-700 mb-3">
+          Query synthesis demonstrates that UX has levers and dials that go far beyond voice and tone adjustments:
+        </p>
         <div className="grid grid-cols-2 gap-4 text-sm text-slate-700">
           <div>
-            <strong className="text-slate-900">What Changes:</strong>
+            <strong className="text-slate-900">Structural Control:</strong>
             <ul className="mt-2 ml-4 space-y-1 text-xs">
-              <li>• Model thinks in structured steps, not stream-of-consciousness</li>
-              <li>• Reasoning is focused on the question, not the process</li>
-              <li>• No meta-commentary about datasets or formatting</li>
-              <li>• CoT becomes a tool for analysis, not self-narration</li>
+              <li>• Define analytical steps vs. free-form thinking</li>
+              <li>• Specify which fields must appear and in what order</li>
+              <li>• Control focus (data vs. process narration)</li>
+              <li>• Shape reasoning patterns, not just language style</li>
             </ul>
           </div>
           <div>
-            <strong className="text-slate-900">Answer Quality:</strong>
+            <strong className="text-slate-900">Potential Impact:</strong>
             <ul className="mt-2 ml-4 space-y-1 text-xs">
-              <li>• Often improves by reducing errors from wandering reasoning</li>
-              <li>• More consistent across queries (structured thinking)</li>
-              <li>• Can surface insights more systematically</li>
-              <li>• <em>Sometimes</em> similar to raw, but with fewer hallucinations</li>
+              <li>• Can improve accuracy by keeping model focused</li>
+              <li>• More consistent outputs across queries</li>
+              <li>• Systematically surfaces key insights</li>
+              <li>• Reduces hallucinations from wandering reasoning</li>
             </ul>
-            <p className="mt-2 text-xs text-slate-700 bg-white rounded p-2 border border-green-200">
-              <strong>Note:</strong> Query synthesis can improve answer accuracy by keeping the model focused and preventing it from making assumptions or getting distracted by meta-reasoning.
-            </p>
           </div>
         </div>
+        <p className="mt-3 text-xs text-slate-700 bg-white rounded p-2 border border-green-300">
+          <strong>Remember:</strong> These are just two approaches among many possibilities. The key insight is that UX can design how models think, not just how they sound. 
+          Other options include XML-like markup, hierarchical outlines, constraint-based instructions, and more.
+        </p>
       </div>
     </div>
   );
@@ -1407,38 +1451,44 @@ Respond ONLY with valid JSON.`;
       <div className="grid grid-cols-3 gap-4">
         {/* Left: Example */}
         <div className="col-span-2 px-6 py-4 bg-slate-50">
-          <h4 className="text-xs font-semibold text-slate-600 mb-3">THINKING (Same content, friendlier tone)</h4>
+          <h4 className="text-xs font-semibold text-slate-600 mb-3">THINKING (CPA explaining to a colleague)</h4>
           <div className="text-sm text-slate-800 space-y-3 leading-relaxed">
             <p>
-              <strong>Understanding your question</strong>
+              <strong>Understanding what you're asking</strong>
             </p>
             <p>
-              Great question! I can see you're asking about gross profit by month for last year. Let me walk you through how I'm interpreting this. The friendly instruction helper has updated from THIS_YEAR_TO_DATE to LAST_YEAR since you specifically mentioned "last year" in your query. Your question is nice and clear as-is, so I won't change the wording - it's already perfectly set up for our analysis pipeline!
-            </p>
-
-            <p>
-              <strong>Figuring out the best data source</strong>
-            </p>
-            <p>
-              For gross profit questions like yours, the Profit and Loss report is definitely your best friend! It's got all the profitability details we need, including that gross profit metric you're after. I can slice it by month and filter to last year for you. Oh, and I noticed some entity labels (like ITEM_NAME and PROJECT_NAME) in the system, but they're not relevant for this big-picture financial view, so I'll skip those to keep things focused.
+              You want to see gross profit broken down by month for last year. Let me explain how I'm thinking about this. Since you specified "last year," I'll pull data for 2024. Your question is clear, so I don't need to reinterpret it.
             </p>
 
             <p>
-              <strong>Getting your report ready</strong>
+              <strong>Selecting the right report</strong>
             </p>
             <p>
-              Okay, so I'm setting up a summary report that looks at Profit and Loss, nicely grouped by Month, for the whole of last year. I went through and grabbed all the gross profit entries first. Then I pulled out the monthly amounts. I made sure to clean up the month formatting so it displays nicely, and I double-checked that all those profit numbers are being read as actual numbers (not text). The whole analysis flow focuses on finding, filtering, adding up, and presenting all those travel expenses in a clear way.
+              For gross profit analysis, I'll use the Profit and Loss report - that's where the profitability metrics live. I can slice that by month and filter to your time period. There are some other data points available, but they're not relevant for this high-level financial view, so I'll focus just on what you asked for.
+            </p>
+
+            <p>
+              <strong>Preparing the analysis</strong>
+            </p>
+            <p>
+              I'm setting up a monthly summary of Profit and Loss for last year. I'll go through the gross profit entries, pull out the amount for each month, make sure the formatting is consistent for display purposes, and verify the numbers are being handled correctly. The process involves identifying the relevant data, filtering it, calculating the totals, and organizing it in a way that's easy to understand.
             </p>
 
             <p className="text-xs text-slate-600 italic bg-yellow-100 border-l-4 border-yellow-500 pl-3 py-2">
-              ⚠️ Notice: Same verbosity, same meta-reasoning, same structural issues - just with a friendlier voice
+              ⚠️ Notice: Still verbose and meta-narrative heavy - describing the process instead of just doing it
             </p>
           </div>
 
           <div className="mt-4 px-6 py-4 border-l-4 border-green-400 bg-white">
-            <div className="text-xs text-green-700 font-medium mb-2">Answer</div>
+            <div className="text-xs text-green-700 font-medium mb-2">
+              ↓ Answer is still fine, but roughly the same as before ↓
+            </div>
             <div className="text-sm text-slate-800">
-              <p>Your gross profit showed steady growth last year, starting at $0 in Q1 and reaching $104,068 by December, with the strongest performance in the second half of the year.</p>
+              <p className="font-semibold mb-2">Gross Profit Analysis by Month for Last Year</p>
+              <p className="mb-2">
+                Total expenses increased $2,650 from $28,100 to $30,750 (9.4% growth). Key drivers: Marketing +$1,400 (11.7%), Freight +$500 (23.8%), Travel +$650 (8.1%). 
+                The increase appears consistent with business growth rather than isolated anomalies.
+              </p>
             </div>
           </div>
         </div>
@@ -1454,33 +1504,33 @@ Respond ONLY with valid JSON.`;
               <div className="bg-white rounded p-2 border border-amber-200">
                 <strong className="text-green-700">✓ Better:</strong>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-700">
-                  <li>More conversational tone</li>
-                  <li>Friendlier language</li>
-                  <li>Less intimidating</li>
+                  <li>Plain language (no jargon)</li>
+                  <li>Professional CPA tone</li>
+                  <li>More accessible</li>
                 </ul>
               </div>
               
               <div className="bg-white rounded p-2 border border-amber-200">
                 <strong className="text-orange-700">⚠️ Still Present:</strong>
                 <ul className="mt-1 ml-4 space-y-1 text-slate-700">
-                  <li>Meta-narrative ("Let me understand...")</li>
-                  <li>Process description ("I'm going to pull...")</li>
-                  <li>Still mentions dataset selection</li>
-                  <li>Verbose self-explanation</li>
+                  <li>Meta-narrative ("Let me explain...")</li>
+                  <li>Process description instead of analysis</li>
+                  <li>Mentions report selection logic</li>
+                  <li>Verbose narration of steps</li>
                 </ul>
               </div>
 
               <div className="bg-white rounded p-2 border border-slate-300">
                 <strong className="text-slate-900">Answer Quality:</strong>
                 <p className="mt-1 text-slate-700">
-                  The answer remains the same quality - voice/tone doesn't improve accuracy or insight.
+                  Roughly the same as Raw CoT - tonal adjustments alone don't improve accuracy or insights.
                 </p>
               </div>
 
               <div className="bg-white rounded p-2 border border-orange-300">
-                <strong className="text-slate-900">Key Insight:</strong>
+                <strong className="text-slate-900">The Limitation:</strong>
                 <p className="mt-1 text-slate-700">
-                  Voice & tone changes make it <em>sound</em> friendlier, but the CoT is still verbose, meta-narrative heavy, and potentially distracting. As an interim solution, it's better than raw - but it misses opportunities for deeper structural improvements.
+                  Voice & tone changes make it more readable, but the CoT is still verbose and process-focused rather than data-focused. Tonal adjustments alone have limited impact - we need structural changes to thinking, not just friendlier language.
                 </p>
               </div>
             </div>
