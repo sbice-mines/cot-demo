@@ -2173,7 +2173,7 @@ Format: Show only the final refined answer (not the scratchpad or review).`;
       </div>
 
       <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
-        <h3 className="text-xl font-semibold text-slate-900 mb-4">💡 What We've Learned</h3>
+        <h3 className="text-xl font-semibold text-slate-900 mb-4">💡 Key Takeaways</h3>
         <div className="space-y-4 text-sm text-slate-700">
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -2220,9 +2220,7 @@ Format: Show only the final refined answer (not the scratchpad or review).`;
       <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-300 rounded-lg p-5 mt-6">
         <h3 className="text-lg font-semibold text-amber-900 mb-3">Remember</h3>
         <p className="text-sm text-slate-700">
-          This is one framework among many. The specific approaches (voice/tone, query synthesis, hybrid) are less important than the 
-          underlying insight: <strong>UX can design how models think, not just how they communicate.</strong> Your context, users, and 
-          constraints will shape which specific techniques work best for you.
+          This is one framework among many. The specific approaches (voice/tone, query synthesis, hybrid) are simply ways in which UX plays an important role in how models think, not just how they "sound" or communicate. Further brainstorming and discussion will help surface how context, users, and constraints will shape which specific techniques work best for us.
         </p>
       </div>
     </div>
